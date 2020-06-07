@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+		
+		<title>Compass Starter by Ariona, Rian</title>
+
+
+		<!-- Loading third party fonts -->
+		<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+		{% load static %}
+		<link href="{% static 'fonts/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
+		<!-- Loading main css file -->
+		<link rel="stylesheet" href="{% static 'style.css' %}">
+		
+		<!--[if lt IE 9]>
+		<script src="js/ie-support/html5.js"></script>
+		<script src="js/ie-support/respond.js"></script>
+		<![endif]-->
+
+		
+
+	</head>
+
+
+	<body>
+		
+		<div class="site-content">
+			<div class="site-header">
+				<div class="container">
+					<a href="index.html" class="branding">
+						<img src="{% static 'images/logo.png' %}" alt="" class="logo">
+						<div class="logo-type">
+							<h1 class="site-title">Weather Report</h1>
+							<small class="site-description">Every 3 hours</small>
+						</div>
+					</a>
+
+					<!-- Default snippet for navigation -->
+					<div class="main-navigation">
+						<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+						<ul class="menu">
+							<li class="menu-item current-menu-item"><a href="/">Home</a></li>
+							<li class="menu-item menu-item"><a href="{% url 'weather:mood_page' %}">Mood</a></li>
+						</ul> <!-- .menu -->
+					</div> <!-- .main-navigation -->
+
+					<div class="mobile-navigation"></div>
+
+				</div>
+			</div> <!-- .site-header -->
+
+			<div class="hero" data-bg-image="{% static 'images/banner.png' %}">
+				<div class="container">
+					<form action="{% url 'weather:city_weather' %}" class="find-location" method="POST">{% csrf_token %}
+						<input type="text" name='city_name' placeholder="Find your location...">
+						<input type="submit" value="Find">
+					</form>
+				</div>
+			</div>
+
+
+			<div class="forecast-table">
+				<div class="container">
+					<div class="forecast-container">
+						<div class="today forecast">
+							<div class="forecast-header">
+								<div class="day">{{date}}</div>
+								<!-- <div class="date">6 Oct</div> -->
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="location">{{city.name}}</div>
+								<div class="degree">
+									<div class="num">{{temp}}<sup>o</sup>C</div>
+									<!-- <div class="forecast-icon">
+										<img src="{% static 'images/icons/icon-14.svg' %}" alt="" width=90>
+									</div>	 -->
+								</div>
+								<span><img src="{% static 'images/icon-umberella.png' %}" alt="">{{cloud}}%</span>
+								<span><img src="{% static 'images/icon-wind.png' %}" alt="">{{wind}}km/h</span>
+							</div>
+						</div>
+
+						<div class="forecast">
+							<div class="forecast-content">
+							<h2>What is your mood today?</h2>
+							<form action="{% url 'weather:register_mood' %}" class="find-location" method="POST">{% csrf_token %}
+								<input type="text" name='mood' placeholder="Register your mood">
+								<input type="hidden" name='date' value="{{mood_date}}">
+								<input type="hidden" name='city_name' value="{{city.name}}">
+								<input type="submit" value="Save Mood">
+							</form>
+						</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+
+			<footer class="site-footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8">
+							<form action="#" class="subscribe-form">
+								<input type="text" placeholder="Enter your email to subscribe...">
+								<input type="submit" value="Subscribe">
+							</form>
+						</div>
+						<div class="col-md-3 col-md-offset-1">
+							<div class="social-links">
+								<a href="#"><i class="fa fa-facebook"></i></a>
+								<a href="#"><i class="fa fa-twitter"></i></a>
+								<a href="#"><i class="fa fa-google-plus"></i></a>
+								<a href="#"><i class="fa fa-pinterest"></i></a>
+							</div>
+						</div>
+					</div>
+
+					<p class="colophon">Copyright 2014 Company name. Designed by Themezy. All rights reserved</p>
+				</div>
+			</footer> <!-- .site-footer -->
+		</div>
+		
+		{% load static %}
+		<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+		<script src="{% static 'assets/css/main.css' %}"></script>
+		<script src="{% static 'js/app.js' %}"></script>
+
+		<!-- JS, Popper.js, and jQuery -->
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+		
+	</body>
+
+</html>
