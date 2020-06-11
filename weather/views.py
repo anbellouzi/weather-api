@@ -30,7 +30,7 @@ class IndexView(ListView):
     
     def getWeatherData(self, city='san francisco'):
         weather = self.getWeather(city)
-        w_list = weather['list']
+        # w_list = weather['list']
         city = weather['city']
         
         now = None
